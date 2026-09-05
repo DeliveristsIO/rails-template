@@ -15,7 +15,7 @@
 #
 #   APP_ORG=DeliveristsIO   the Docker organisation config/deploy.yml pushes to
 #   SKELETON_REPO=…         a clone source other than this file's own repository
-#   SKELETON_BRANCH=…       a branch other than main
+#   SKELETON_BRANCH=…       a branch other than the source's default
 
 require "fileutils"
 require "shellwords"
@@ -27,7 +27,7 @@ DEFAULT_REPO = "https://github.com/DeliveristsIO/rails-template.git"
 # source. Run from a URL, __FILE__ is the URL and there is nothing to read.
 template_home = File.expand_path("..", __FILE__) if File.file?(__FILE__)
 repo = ENV["SKELETON_REPO"].presence || template_home || DEFAULT_REPO
-branch = ENV["SKELETON_BRANCH"].presence || "main"
+branch = ENV["SKELETON_BRANCH"].presence
 org = ENV["APP_ORG"].presence
 
 after_bundle do
@@ -36,11 +36,16 @@ after_bundle do
     system(*command) || raise(Thor::Error, "template: `#{command.join(" ")}` failed")
   end
 
-  say_status :skeleton, "#{repo} (#{branch})", :green
+  say_status :skeleton, [ repo, branch ].compact.join(" "), :green
 
   Dir.mktmpdir do |tmp|
     clone = File.join(tmp, "skeleton")
-    sh! "git", "clone", "--quiet", "--depth", "1", "--branch", branch, repo.to_s, clone
+
+    # No --branch unless one was asked for: the source's own default is the
+    # right answer, and naming it wrongly fails the clone rather than the
+    # checkout. --depth only where it means anything; git warns on a local path.
+    depth = %w[ --depth 1 ] if repo.to_s.match?(%r{\A[a-z]+://|\A[^/]+@})
+    sh! "git", "clone", "--quiet", *Array(depth), *(branch ? [ "--branch", branch ] : []), repo.to_s, clone
 
     # The generated application goes, its repository stays: `rails new` has
     # already run `git init` here and the history belongs to the new app.
@@ -50,7 +55,7 @@ after_bundle do
 
     # Tracked files only — the same rule `bin/new-app` renames under, so a
     # .env or a .kamal/secrets in the source working copy cannot travel.
-    sh! "sh", "-c", "git -C #{Shellwords.escape(clone)} archive #{Shellwords.escape(branch)} | " \
+    sh! "sh", "-c", "git -C #{Shellwords.escape(clone)} archive HEAD | " \
                     "tar -x -C #{Shellwords.escape(destination_root)}"
   end
 
