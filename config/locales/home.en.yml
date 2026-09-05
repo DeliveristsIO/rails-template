@@ -6,7 +6,7 @@ en:
         needs already built — accounts, plans, rate limits, three languages, one command
         that says whether the app is green, and a container that deploys.
       cta: Create an account
-      eyebrow: Application skeleton
+      eyebrow: Fresh install
       heading: Everything before the idea.
       plan_cta: See the plans
       secondary_cta: Read the source

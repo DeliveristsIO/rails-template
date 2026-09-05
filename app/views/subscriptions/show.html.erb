@@ -40,10 +40,9 @@
       <section class="flex flex-col rounded-2xl border px-7 py-8 <%= live ? "border-ink-900 bg-white" : "border-ink-200" %>">
         <p class="text-xl font-medium tracking-tight"><%= plan.name %></p>
         <p class="mt-3 text-3xl font-semibold tracking-tight tabular-nums">
-          <%= plan.free? ? t("subscriptions.show.free_price")
-                         : number_to_currency(plan.price_cents / 100.0,
-                                              unit: t("subscriptions.currency.#{Payments::StripeConfig.currency}"),
-                                              precision: 0) %>
+          <%= number_to_currency(plan.price_cents / 100.0,
+                                 unit: t("subscriptions.currency.#{Payments::StripeConfig.currency}"),
+                                 precision: 0) %>
           <% unless plan.free? %>
             <span class="text-base font-normal text-ink-400"><%= t("subscriptions.show.per_month") %></span>
           <% end %>

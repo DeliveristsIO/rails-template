@@ -38,7 +38,6 @@ de:
       choose: "%{plan} wählen"
       current: Aktueller Tarif
       free_note: Hier startet jedes Konto.
-      free_price: Kostenlos
       heading: Tarif
       lapsed: Die letzte Zahlung ging nicht durch, deshalb gelten für dieses Konto
         wieder die kostenlosen Obergrenzen. Es wurde nichts gelöscht.

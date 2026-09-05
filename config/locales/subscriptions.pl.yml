@@ -37,7 +37,6 @@ pl:
       choose: Wybierz %{plan}
       current: Obecny plan
       free_note: Tu zaczyna każde konto.
-      free_price: Darmowy
       heading: Plan
       lapsed: Ostatnia płatność nie przeszła, więc konto wróciło do darmowych limitów,
         dopóki to się nie zmieni. Nic nie zostało usunięte.

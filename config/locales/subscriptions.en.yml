@@ -40,7 +40,6 @@ en:
       choose: Choose %{plan}
       current: Current plan
       free_note: Where every account starts.
-      free_price: Free
       heading: Plan
       lapsed: The last payment did not go through, so this account is back on the
         free ceilings until it does. Nothing has been deleted.

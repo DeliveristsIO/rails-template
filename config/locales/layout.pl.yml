@@ -1,8 +1,8 @@
 ---
 pl:
   layout:
-    colophon: Zbudowane na szkielecie Rails od Deliverists. Zastąp tę linię tym, co
-      produkt musi powiedzieć zgodnie z prawem — i niczym ponadto.
+    colophon: Zastąp tę linię tym, co produkt musi powiedzieć zgodnie z prawem — i
+      niczym ponadto.
     language: Język
     mark: Skeleton
     plan: Plan
