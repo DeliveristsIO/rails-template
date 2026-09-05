@@ -50,8 +50,10 @@ for file in "${files[@]}"; do
 done
 
 # This script is the one thing that cannot survive its own success: a second
-# run would rename an app that no longer carries the placeholder.
-git rm -q --cached bin/new-app >/dev/null 2>&1 || true
+# run would rename an app that no longer carries the placeholder. --force
+# because the loop above has just rewritten this file too, and git will not
+# drop a path whose staged content matches neither the working copy nor HEAD.
+git rm -q -f --cached bin/new-app >/dev/null 2>&1 || true
 rm -f bin/new-app
 
 cat <<MSG
