@@ -3,6 +3,32 @@
 What is here, and why it is the way it is. Everything below is a decision the
 next app inherits rather than re-argues.
 
+## How a new app starts
+
+A repository that is cloned and renamed, not a generator script that builds an
+app from nothing. Three reasons. Edge Rails moves, and a script that patches
+generated files breaks silently whenever the generator's output shifts,
+whereas a repository fails loudly in `bin/ci`. A repository can be diffed
+against the apps it came from and every app that comes after it; a script
+cannot. And half of what is worth inheriting — fifteen locale files, the token
+layer, three Kamal files, ninety-odd tests — would have to be heredocs inside
+that script.
+
+`template.rb` exists so `rails new my-app -m …` works anyway, for the
+ergonomics. It is a wrapper, and honestly so: it clones this repository over
+the application `rails new` just generated and then runs `bin/new-app`. The
+renaming lives in `bin/new-app` and nowhere else, so the two entry points
+cannot drift.
+
+It runs inside `after_bundle` deliberately. `apply_rails_template` fires
+before `run_bundle` and before the javascript, hotwire, css, kamal and solid
+installers, and each of those would reinstall something already here;
+`run_after_bundle_callbacks` is the last task the generator runs.
+
+Both scripts delete themselves. A second run would rename an application that
+no longer carries the placeholder, and an app that still shipped `template.rb`
+would be handing out copies of a starting point it has already left.
+
 ## Stack
 
 Rails edge on Ruby 4, Hotwire, Tailwind v4 through `tailwindcss-rails`,

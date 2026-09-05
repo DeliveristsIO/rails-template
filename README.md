@@ -4,21 +4,37 @@ The application that is left when you take the product out.
 
 It is the shared structure of two shipped Rails apps — Quento and the brand
 screener — extracted after the second one, on the principle that anything both
-of them needed and neither of them wanted to write twice belongs here. Clone
-it, run `bin/new-app`, and start on the part that is actually the product.
+of them needed and neither of them wanted to write twice belongs here. Take a
+copy, name it, and start on the part that is actually the product.
+
+```bash
+rails new my-app --skip-bundle -m https://raw.githubusercontent.com/DeliveristsIO/rails-template/main/template.rb
+```
+
+`template.rb` is a Rails application template: `rails new` generates a stock
+app, and the template replaces it with this one's tracked files and renames
+the placeholder. Put that `-m` line in `~/.railsrc` and plain `rails new
+my-app` does it. `APP_ORG=DeliveristsIO` sets the Docker organisation.
+
+The same thing by hand, which is what the template runs:
 
 ```bash
 git clone git@github.com:DeliveristsIO/rails-template.git my-app
 cd my-app
-bin/new-app my-app          # module, database, Kamal service, mail sender
+bin/new-app my-app deliverists-io   # module, database, Kamal service, mail sender
+```
+
+Either way, from there:
+
+```bash
 bin/setup                   # toolchain, gems, database
 bin/rails credentials:edit  # this app's own master key
 bin/ci                      # everything green before the first commit
 bin/dev                     # web + css + jobs
 ```
 
-`bin/new-app` deletes itself when it is done. It is the only thing here that
-cannot survive its own success.
+`bin/new-app` and `template.rb` both delete themselves when they are done.
+They are the only things here that cannot survive their own success.
 
 ## What is in it
 

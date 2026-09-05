@@ -9,8 +9,12 @@ Read [README.md](README.md) first, then [docs/ARCHITECTURE.md](docs/ARCHITECTURE
 
 If this repository is still called `rails-template` and `bin/new-app` still
 exists, nobody has instantiated it yet — changes here land in every app that
-comes after, so weigh them accordingly. If `bin/new-app` is gone, this is a
-real product and the notes below are its inherited conventions.
+comes after, so weigh them accordingly. If `bin/new-app` and `template.rb` are
+gone, this is a real product and the notes below are its inherited conventions.
+
+There are two ways in and they share one implementation: `git clone` then
+`bin/new-app`, or `rails new -m template.rb`, which clones and then runs
+`bin/new-app` itself. Renaming logic goes in `bin/new-app` only.
 
 ## Ground rules
 
