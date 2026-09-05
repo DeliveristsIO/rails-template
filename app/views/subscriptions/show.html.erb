@@ -56,7 +56,9 @@
           <% %i[ projects seats api_requests_per_hour ].each do |ceiling| %>
             <div class="flex items-baseline justify-between gap-3">
               <dt class="text-ink-400"><%= t("subscriptions.ceilings.#{ceiling}") %></dt>
-              <dd class="font-medium tabular-nums"><%= number_with_delimiter(plan.public_send(ceiling)) %></dd>
+              <%# A delimited number that wraps reads as two numbers. The label
+                  is what gives, since it is the half that can. %>
+              <dd class="font-medium whitespace-nowrap tabular-nums"><%= number_with_delimiter(plan.public_send(ceiling)) %></dd>
             </div>
           <% end %>
         </dl>
