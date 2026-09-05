@@ -59,19 +59,17 @@ after_bundle do
                     "tar -x -C #{Shellwords.escape(destination_root)}"
   end
 
+  # This file arrives with the rest of the tracked tree and has the same
+  # problem bin/new-app has: it cannot survive its own success. Gone before
+  # the index is built, so it is never staged and never renamed.
+  FileUtils.rm_f(File.join(destination_root, "template.rb"))
+
   # `rails new --skip-git` leaves no repository, and bin/new-app reads the
   # index to decide what it is allowed to rewrite.
   sh! "git", "-C", destination_root, "init", "--quiet" unless File.directory?(File.join(destination_root, ".git"))
   sh! "git", "-C", destination_root, "add", "-A"
 
   sh! File.join(destination_root, "bin", "new-app"), app_name, *Array(org)
-
-  # This file arrives with the rest of the tracked tree and has the same
-  # problem bin/new-app has: it cannot survive its own success.
-  inside(destination_root) do
-    sh! "git", "rm", "--quiet", "--cached", "template.rb"
-    FileUtils.rm_f("template.rb")
-  end
 
   # The Gemfile is not the one `rails new` bundled, whether or not it did.
   inside(destination_root) { sh! "bundle", "install", "--quiet" }
