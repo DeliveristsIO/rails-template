@@ -1,0 +1,54 @@
+---
+en:
+  home:
+    hero:
+      body: Rails edge, Hotwire, Tailwind and PostgreSQL, with the parts every product
+        needs already built — accounts, plans, rate limits, three languages, one command
+        that says whether the app is green, and a container that deploys.
+      cta: Create an account
+      eyebrow: Application skeleton
+      heading: Everything before the idea.
+      plan_cta: See the plans
+      secondary_cta: Read the source
+    included:
+      auth:
+        body: Password sign-up and sign-in on a server-side session row, so a session
+          can be ended from the server rather than only by a cookie expiring.
+        name: Accounts and sessions
+        where: app/controllers/concerns/authentication.rb
+      billing:
+        body: Stripe Checkout for a plan, Stripe's own Billing Portal for everything
+          after it, and a webhook that is idempotent because Stripe redelivers.
+        name: Subscriptions
+        where: app/services/payments/
+      ci:
+        body: One command — style, translations, gem audit, importmap audit, Brakeman,
+          and the tests. The same command runs in GitHub Actions.
+        name: bin/ci
+        where: config/ci.rb
+      deploy:
+        body: A container that boots with Thruster in front of Puma, and Kamal configuration
+          for a staging and a production destination.
+        name: Kamal deploys
+        where: config/deploy.yml
+      heading: What is already wired
+      i18n:
+        body: English, German and Polish from the first view, negotiated from the
+          URL and the Accept-Language header. Missing keys fail the build.
+        name: Three languages
+        where: config/locales/
+      limits:
+        body: rack-attack in front of the expensive verbs, reading its ceilings off
+          the plan behind the request rather than off a constant.
+        name: Rate limits
+        where: config/initializers/rack_attack.rb
+    next:
+      heading: Before the second screen
+      plan: Rename the ceilings in app/models/plan.rb to whatever this product meters,
+        and keep the rule that the free tier's numbers never go down.
+      rename: Run bin/new-app to give the application a module name, a database name
+        and a Kamal service name of its own.
+      strip: Delete this page. It exists to prove the stack boots, and it is the first
+        thing that should stop being true of the app.
+      tokens: Re-pitch the design tokens in app/assets/tailwind/application.css. Views
+        name tokens rather than Tailwind colours, so a restyle is one file.

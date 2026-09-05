@@ -1,0 +1,54 @@
+---
+pl:
+  home:
+    hero:
+      body: Rails edge, Hotwire, Tailwind i PostgreSQL — z gotowymi częściami, których
+        potrzebuje każdy produkt — konta, plany, limity zapytań, trzy języki, jedno
+        polecenie mówiące, czy aplikacja jest zielona, i kontener, który się wdraża.
+      cta: Załóż konto
+      eyebrow: Szkielet aplikacji
+      heading: Wszystko przed pomysłem.
+      plan_cta: Zobacz plany
+      secondary_cta: Przeczytaj kod
+    included:
+      auth:
+        body: Rejestracja i logowanie hasłem na wierszu sesji po stronie serwera —
+          sesję można zakończyć z serwera, a nie dopiero wtedy, gdy wygaśnie ciasteczko.
+        name: Konta i sesje
+        where: app/controllers/concerns/authentication.rb
+      billing:
+        body: Stripe Checkout dla planu, własny portal rozliczeniowy Stripe dla wszystkiego
+          później, i webhook idempotentny, bo Stripe dostarcza ponownie.
+        name: Subskrypcje
+        where: app/services/payments/
+      ci:
+        body: Jedno polecenie — styl, tłumaczenia, audyt gemów, audyt importmap, Brakeman
+          i testy. To samo polecenie działa w GitHub Actions.
+        name: bin/ci
+        where: config/ci.rb
+      deploy:
+        body: Kontener startujący z Thrusterem przed Pumą oraz konfiguracja Kamala
+          dla środowiska staging i produkcyjnego.
+        name: Wdrożenia Kamal
+        where: config/deploy.yml
+      heading: Co jest już podłączone
+      i18n:
+        body: Angielski, niemiecki i polski od pierwszego widoku, negocjowane z adresu
+          URL i nagłówka Accept-Language. Brakujące klucze przerywają build.
+        name: Trzy języki
+        where: config/locales/
+      limits:
+        body: rack-attack przed kosztownymi czasownikami, z limitami czytanymi z planu
+          stojącego za żądaniem, a nie ze stałej.
+        name: Limity zapytań
+        where: config/initializers/rack_attack.rb
+    next:
+      heading: Przed drugim ekranem
+      plan: Zmień nazwy limitów w app/models/plan.rb na to, co ten produkt naprawdę
+        mierzy, i zachowaj zasadę, że liczby planu darmowego nigdy nie spadają.
+      rename: Uruchom bin/new-app, aby nadać aplikacji własną nazwę modułu, bazy danych
+        i usługi Kamal.
+      strip: Usuń tę stronę. Istnieje tylko po to, by dowieść, że stos się uruchamia,
+        i powinna przestać być prawdą jako pierwsza.
+      tokens: Przestrój tokeny w app/assets/tailwind/application.css. Widoki nazywają
+        tokeny zamiast kolorów Tailwinda, więc restyling to jeden plik.

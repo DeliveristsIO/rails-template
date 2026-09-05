@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/*
+ * The design system, as tokens rather than as classes scattered through views.
+ *
+ * TEMPLATE: this is a neutral, document-flavoured base — ink on paper, one
+ * accent, three state colours. Re-pitch it for the product before writing the
+ * second screen: change the hues here and every view follows, which is the
+ * whole reason the views name tokens (`text-ink-600`) instead of Tailwind's
+ * own palette (`text-slate-600`). Keep that rule; it is what makes a restyle a
+ * one-file change.
+ */
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  /* Ink on paper. A near-neutral with a trace of blue in it, because a true
+     grey next to white reads as dirty rather than as quiet. */
+  --color-ink-50: oklch(0.985 0.002 265);
+  --color-ink-100: oklch(0.96 0.004 265);
+  --color-ink-200: oklch(0.91 0.006 265);
+  --color-ink-300: oklch(0.82 0.009 265);
+  --color-ink-400: oklch(0.62 0.014 265);
+  --color-ink-600: oklch(0.44 0.02 265);
+  --color-ink-800: oklch(0.29 0.022 265);
+  --color-ink-900: oklch(0.22 0.02 265);
+  --color-ink-950: oklch(0.16 0.018 265);
+
+  /* The paper itself, and the slightly deeper ground panels sit on. */
+  --color-paper: oklch(0.988 0.003 265);
+  --color-paper-deep: oklch(0.965 0.004 265);
+
+  /* Three states, and only three. More than this and nothing on the page is
+     emphatic, because everything is. */
+  --color-state-ok: oklch(0.58 0.12 155);
+  --color-state-warn: oklch(0.72 0.14 75);
+  --color-state-bad: oklch(0.55 0.20 27);
+
+  /* The one accent. Everything that is not a state colour is ink. */
+  --color-signal: oklch(0.52 0.16 255);
+  --color-signal-soft: oklch(0.95 0.03 255);
+
+  --text-display: 4.25rem;
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.035em;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink-900);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Anything that counts, ticks or is read down a column. Proportional digits
+     make those shift sideways as they change. */
+  .tabular, output, time, .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

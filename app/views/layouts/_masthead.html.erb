@@ -1,0 +1,34 @@
+<%# The mark is a mark rather than a wordmark: drawn, so it stays crisp at
+    24px, and replaceable in one file when the product has a real one. %>
+<header class="border-b border-ink-100">
+  <div class="mx-auto flex max-w-6xl items-center gap-4 px-6 py-5">
+    <%= link_to root_path, class: "group flex items-center gap-2.5", "aria-label": t("layout.mark") do %>
+      <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10.25" stroke="currentColor" stroke-width="0.75" class="text-ink-300"/>
+        <circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="0.75" class="text-ink-300"/>
+        <circle cx="12" cy="12" r="3" class="fill-ink-900"/>
+      </svg>
+      <span class="font-mono text-xs tracking-[0.2em] text-ink-600 uppercase group-hover:text-ink-900">
+        <%= t("layout.mark") %>
+      </span>
+    <% end %>
+
+    <div class="ml-auto flex items-center gap-3">
+      <%# Per-page actions, so a screen can put its own primary verb up here
+          without this partial knowing what the screens are. %>
+      <%= yield :masthead_actions %>
+
+      <% if authenticated? %>
+        <%= link_to t("layout.plan"), subscription_path,
+              class: "rounded-md px-3.5 py-2 text-sm text-ink-600 transition hover:bg-white" %>
+        <%= button_to t("layout.sign_out"), sign_out_path, method: :delete,
+              class: "cursor-pointer rounded-md px-3.5 py-2 text-sm text-ink-600 transition hover:bg-white" %>
+      <% else %>
+        <%= link_to t("layout.sign_in"), sign_in_path,
+              class: "rounded-md px-3.5 py-2 text-sm text-ink-600 transition hover:bg-white" %>
+        <%= link_to t("layout.sign_up"), sign_up_path,
+              class: "rounded-md bg-ink-900 px-3.5 py-2 text-sm font-medium text-paper transition hover:bg-ink-800" %>
+      <% end %>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,37 @@
+<% content_for :title, t("registrations.new.title") %>
+
+<main class="mx-auto flex max-w-md flex-col justify-center px-6 py-24">
+  <h1 class="text-4xl font-semibold tracking-tight"><%= t("registrations.new.heading") %></h1>
+  <p class="mt-3 leading-relaxed text-ink-600"><%= t("registrations.new.body") %></p>
+
+  <%= form_with model: @user, url: sign_up_path, class: "mt-10 space-y-5" do |form| %>
+    <% if @user.errors.any? %>
+      <p class="rounded-lg bg-state-bad/10 px-4 py-3 text-sm text-state-bad">
+        <%= @user.errors.full_messages.to_sentence %>
+      </p>
+    <% end %>
+
+    <div>
+      <%= form.label :email_address, t("accounts.email"), class: "block text-sm text-ink-600" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email",
+            class: "mt-2 w-full rounded-lg border border-ink-200 bg-white px-4 py-3 outline-none transition focus:border-ink-900" %>
+    </div>
+
+    <div>
+      <%= form.label :password, t("accounts.password"), class: "block text-sm text-ink-600" %>
+      <%= form.password_field :password, required: true, minlength: 12, autocomplete: "new-password",
+            class: "mt-2 w-full rounded-lg border border-ink-200 bg-white px-4 py-3 outline-none transition focus:border-ink-900" %>
+      <p class="mt-2 text-xs text-ink-400"><%= t("accounts.password_hint", count: 12) %></p>
+    </div>
+
+    <%= render "shared/turnstile" %>
+
+    <%= form.submit t("registrations.new.submit"),
+          class: "w-full cursor-pointer rounded-xl bg-ink-900 px-6 py-4 font-medium text-paper transition hover:bg-ink-800" %>
+  <% end %>
+
+  <p class="mt-6 text-sm text-ink-400">
+    <%= t("registrations.new.have_account") %>
+    <%= link_to t("registrations.new.sign_in"), sign_in_path, class: "text-ink-900 underline underline-offset-4" %>
+  </p>
+</main>

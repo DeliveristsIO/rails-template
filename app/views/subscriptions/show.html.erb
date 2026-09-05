@@ -1,0 +1,85 @@
+<% content_for :title, t("subscriptions.show.title") %>
+
+<main class="mx-auto max-w-6xl px-6 pt-12 pb-24">
+  <div class="border-b border-ink-100 pb-8">
+    <h1 class="text-5xl font-semibold tracking-tight"><%= t("subscriptions.show.heading") %></h1>
+    <p class="mt-3 max-w-[62ch] leading-relaxed text-ink-600"><%= t("subscriptions.show.body") %></p>
+  </div>
+
+  <%# What this account is on right now, and the one link that changes
+      everything about it. The portal is Stripe's page, so it is offered as a
+      link out rather than dressed up as one of ours. %>
+  <section class="mt-10 flex flex-wrap items-baseline justify-between gap-6 rounded-2xl border border-ink-200 px-8 py-7">
+    <div>
+      <p class="text-sm text-ink-400"><%= t("subscriptions.show.current") %></p>
+      <p class="mt-1 text-2xl font-medium tracking-tight"><%= @plan.name %></p>
+      <% if current_user.plan_period_ends_at.present? && @plan.paid? %>
+        <p class="mt-2 text-sm text-ink-400">
+          <%= t("subscriptions.show.renews", when: l(current_user.plan_period_ends_at.to_date, format: :long)) %>
+        </p>
+      <% end %>
+      <% if current_user.stripe_subscription_id.present? && !current_user.subscription_live? %>
+        <p class="mt-2 max-w-[52ch] text-sm leading-relaxed text-state-bad">
+          <%= t("subscriptions.show.lapsed") %>
+        </p>
+      <% end %>
+    </div>
+
+    <% if current_user.stripe_customer_id.present? && Payments::StripeSubscription.configured? %>
+      <%= button_to t("subscriptions.show.portal"), portal_subscription_path,
+            class: "cursor-pointer rounded-xl px-5 py-3 text-sm font-medium text-ink-600 ring-1 ring-ink-200 transition hover:bg-white" %>
+    <% end %>
+  </section>
+
+  <%# The ceilings, per tier, from the same object the validations ask. A
+      pricing table that disagrees with what the product refuses is the kind
+      of thing nobody notices until somebody has paid for it. %>
+  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <% Plan.all.each do |plan| %>
+      <% live = plan == @plan %>
+      <section class="flex flex-col rounded-2xl border px-7 py-8 <%= live ? "border-ink-900 bg-white" : "border-ink-200" %>">
+        <p class="text-xl font-medium tracking-tight"><%= plan.name %></p>
+        <p class="mt-3 text-3xl font-semibold tracking-tight tabular-nums">
+          <%= plan.free? ? t("subscriptions.show.free_price")
+                         : number_to_currency(plan.price_cents / 100.0,
+                                              unit: t("subscriptions.currency.#{Payments::StripeConfig.currency}"),
+                                              precision: 0) %>
+          <% unless plan.free? %>
+            <span class="text-base font-normal text-ink-400"><%= t("subscriptions.show.per_month") %></span>
+          <% end %>
+        </p>
+        <p class="mt-4 max-w-[36ch] text-sm leading-relaxed text-ink-600"><%= plan.summary %></p>
+
+        <dl class="mt-6 grow space-y-2 border-t border-ink-100 pt-5 text-sm">
+          <%# TEMPLATE: name the ceilings this product actually meters. The list
+              lives here rather than on Plan so a tier can gain a ceiling the
+              pricing table has no room for. %>
+          <% %i[ projects seats api_requests_per_hour ].each do |ceiling| %>
+            <div class="flex items-baseline justify-between gap-3">
+              <dt class="text-ink-400"><%= t("subscriptions.ceilings.#{ceiling}") %></dt>
+              <dd class="font-medium tabular-nums"><%= number_with_delimiter(plan.public_send(ceiling)) %></dd>
+            </div>
+          <% end %>
+        </dl>
+
+        <div class="mt-7">
+          <% if live %>
+            <p class="text-sm font-medium text-ink-400"><%= t("subscriptions.show.on_this_plan") %></p>
+          <% elsif plan.free? %>
+            <p class="text-sm text-ink-400"><%= t("subscriptions.show.free_note") %></p>
+          <% elsif @offered.include?(plan) %>
+            <%= button_to t("subscriptions.show.choose", plan: plan.name), subscription_path,
+                  params: { plan: plan.key },
+                  class: "w-full cursor-pointer rounded-xl bg-ink-900 px-5 py-3.5 text-sm font-medium text-paper transition hover:bg-ink-800" %>
+          <% else %>
+            <p class="text-sm text-ink-400"><%= t("subscriptions.show.unavailable") %></p>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </div>
+
+  <p class="mt-10 max-w-[70ch] text-sm leading-relaxed text-ink-400">
+    <%= t("subscriptions.show.note") %>
+  </p>
+</main>

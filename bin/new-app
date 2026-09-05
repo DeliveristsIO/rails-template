@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Turn this skeleton into an application of its own.
+#
+#   bin/new-app <name> [org]
+#
+# Rewrites the placeholder identity — module name, database names, Kamal
+# service and image, mail sender, Flipper realm — everywhere it appears, in
+# tracked text files only. Run it once, immediately after cloning, before the
+# first commit of the new app.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if [ $# -lt 1 ]; then
+  echo "usage: bin/new-app <name> [org]" >&2
+  echo "  e.g. bin/new-app invoicer deliverists-io" >&2
+  exit 1
+fi
+
+# One canonical form in, two out: my_app for paths and identifiers, MyApp for
+# the Ruby module. Anything that is not a letter or a digit becomes the
+# underscore, so "My App", "my-app" and "my_app" all land in the same place.
+raw="$1"
+org="${2:-ORG}"
+snake="$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/_/g; s/^_+|_+$//g')"
+
+if [ -z "$snake" ]; then
+  echo "new-app: '$raw' has no letters or digits in it." >&2
+  exit 1
+fi
+
+if printf '%s' "$snake" | grep -qE '^[0-9]'; then
+  echo "new-app: '$raw' starts with a digit, which cannot open a Ruby module name." >&2
+  exit 1
+fi
+
+camel="$(printf '%s' "$snake" | sed -E 's/(^|_)([a-z0-9])/\U\2/g')"
+
+# Tracked text files only. `git ls-files` keeps .env and .kamal/secrets out of
+# reach by construction, and grep -I keeps the fonts and the icons out.
+mapfile -t files < <(git ls-files -z | xargs -0 grep -Ilse 'Skeleton' -e 'skeleton' -e 'ORG' 2>/dev/null || true)
+
+if [ ${#files[@]} -eq 0 ]; then
+  echo "new-app: nothing left to rename — this looks like it has already been run." >&2
+  exit 1
+fi
+
+for file in "${files[@]}"; do
+  sed -i "s/Skeleton/${camel}/g; s/skeleton/${snake}/g; s|\bORG\b|${org}|g" "$file"
+done
+
+# This script is the one thing that cannot survive its own success: a second
+# run would rename an app that no longer carries the placeholder.
+git rm -q --cached bin/new-app >/dev/null 2>&1 || true
+rm -f bin/new-app
+
+cat <<MSG
+
+  ${camel} it is. ${#files[@]} files rewritten.
+
+  Next:
+    bin/setup                     toolchain, gems, database
+    bin/rails credentials:edit    generate this app's own master key
+    bin/ci                        everything green before the first commit
+
+  Then, before the second screen:
+    config/deploy*.yml            HOST_IP and the hostnames
+    app/models/plan.rb            the ceilings this product actually meters
+    app/assets/tailwind/…css      the design tokens
+    app/views/home/show.html.erb  delete it
+
+MSG

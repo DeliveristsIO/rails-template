@@ -1,0 +1,57 @@
+---
+de:
+  home:
+    hero:
+      body: Rails Edge, Hotwire, Tailwind und PostgreSQL — mit allem, was jedes Produkt
+        braucht, bereits gebaut — Konten, Tarife, Ratenbegrenzung, drei Sprachen,
+        ein Befehl, der sagt, ob die App grün ist, und ein Container, der deployt.
+      cta: Konto anlegen
+      eyebrow: Anwendungsgerüst
+      heading: Alles vor der Idee.
+      plan_cta: Tarife ansehen
+      secondary_cta: Quellcode lesen
+    included:
+      auth:
+        body: Registrierung und Anmeldung mit Passwort auf einer serverseitigen Sitzungszeile
+          — so lässt sich eine Sitzung vom Server aus beenden und nicht erst, wenn
+          das Cookie abläuft.
+        name: Konten und Sitzungen
+        where: app/controllers/concerns/authentication.rb
+      billing:
+        body: Stripe Checkout für den Tarif, Stripes eigenes Billing-Portal für alles
+          danach, und ein Webhook, der idempotent ist, weil Stripe erneut zustellt.
+        name: Abonnements
+        where: app/services/payments/
+      ci:
+        body: Ein Befehl — Stil, Übersetzungen, Gem-Audit, Importmap-Audit, Brakeman
+          und die Tests. Derselbe Befehl läuft in GitHub Actions.
+        name: bin/ci
+        where: config/ci.rb
+      deploy:
+        body: Ein Container, der mit Thruster vor Puma startet, und Kamal-Konfiguration
+          für ein Staging- und ein Produktionsziel.
+        name: Kamal-Deploys
+        where: config/deploy.yml
+      heading: Was bereits verdrahtet ist
+      i18n:
+        body: Englisch, Deutsch und Polnisch ab der ersten Ansicht, ausgehandelt über
+          die URL und den Accept-Language-Header. Fehlende Schlüssel brechen den Build.
+        name: Drei Sprachen
+        where: config/locales/
+      limits:
+        body: rack-attack vor den teuren Verben, mit Obergrenzen aus dem Tarif hinter
+          der Anfrage statt aus einer Konstanten.
+        name: Ratenbegrenzung
+        where: config/initializers/rack_attack.rb
+    next:
+      heading: Vor dem zweiten Bildschirm
+      plan: Benennen Sie die Obergrenzen in app/models/plan.rb nach dem um, was dieses
+        Produkt misst — und behalten Sie die Regel, dass die Zahlen des kostenlosen
+        Tarifs nie sinken.
+      rename: Führen Sie bin/new-app aus, um der Anwendung einen eigenen Modulnamen,
+        Datenbanknamen und Kamal-Dienstnamen zu geben.
+      strip: Löschen Sie diese Seite. Sie beweist nur, dass der Stack startet, und
+        sollte als Erstes nicht mehr zutreffen.
+      tokens: Stimmen Sie die Design-Token in app/assets/tailwind/application.css
+        neu ab. Ansichten benennen Token statt Tailwind-Farben, ein Restyling ist
+        also eine Datei.

@@ -1,0 +1,51 @@
+---
+de:
+  plans:
+    business:
+      name: Business
+      summary: Ein Unternehmen mit dem ganzen Team darin und der API, die den Großteil
+        der Arbeit übernimmt.
+    free:
+      name: Kostenlos
+      summary: Genug, um etwas Echtes darauf zu bauen — und genug, um herauszufinden,
+        ob es das Geld wert ist.
+    starter:
+      name: Starter
+      summary: Eine Person mit mehreren Dingen gleichzeitig statt einem nach dem anderen.
+    team:
+      name: Team
+      summary: Ein Team, das jede Woche daran arbeitet, mit Platz für alle Beteiligten.
+  subscriptions:
+    ceilings:
+      api_requests_per_hour: API-Anfragen pro Stunde
+      projects: Projekte
+      seats: Plätze
+    confirmed: Ihr Tarif ist aktiv.
+    confirming: Stripe hat Ihre Zahlung. Der Tarif wird aktiv, sobald Stripe sie bestätigt
+      — meist innerhalb von Sekunden.
+    currency:
+      eur: "€"
+      pln: zł
+      usd: "$"
+    errors:
+      no_customer: Es gibt noch kein Rechnungskonto zu öffnen. Es entsteht mit dem
+        ersten Abonnement.
+      unavailable: Stripe war nicht erreichbar. Es wurde nichts abgebucht.
+      unknown_plan: Das ist kein angebotener Tarif.
+    show:
+      body: Was ein Konto darf, pro Stufe. Jede Zahl hier ist die Zahl, die das Produkt
+        tatsächlich durchsetzt — Preistabelle und Ablehnung lesen aus derselben Quelle.
+      choose: "%{plan} wählen"
+      current: Aktueller Tarif
+      free_note: Hier startet jedes Konto.
+      free_price: Kostenlos
+      heading: Tarif
+      lapsed: Die letzte Zahlung ging nicht durch, deshalb gelten für dieses Konto
+        wieder die kostenlosen Obergrenzen. Es wurde nichts gelöscht.
+      note: Preise pro Monat, zuzüglich Mehrwertsteuer, wo sie anfällt.
+      on_this_plan: Der Tarif dieses Kontos.
+      per_month: "/ Monat"
+      portal: Rechnungen und Zahlungen
+      renews: Verlängert sich am %{when}
+      title: Tarif
+      unavailable: Hier noch nicht im Verkauf.

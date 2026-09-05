@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= content_for(:title) || t("layout.title") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="<%= t("layout.title") %>">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Turbo broadcasts arrive as a refresh rather than as rendered HTML, so
+        what a visitor may see is decided by their own session on re-render
+        rather than by whoever's session rendered the broadcast. Morphing is
+        what keeps that from reading as a page reload. %>
+    <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# The two faces the first screenful needs. Without these the display
+        headline reflows once Geist lands. %>
+    <link rel="preload" href="<%= asset_path("geist-sans-latin.woff2") %>" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="<%= asset_path("geist-mono-latin.woff2") %>" as="font" type="font/woff2" crossorigin>
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="min-h-screen bg-paper font-sans text-ink-900 antialiased">
+    <%= render "layouts/masthead" %>
+    <%= yield %>
+    <%= render "layouts/colophon" %>
+  </body>
+</html>

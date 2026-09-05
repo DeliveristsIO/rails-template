@@ -1,0 +1,13 @@
+---
+en:
+  errors:
+    challenge_failed: That did not look like a browser with a person behind it. Please
+      try again.
+    throttled:
+      back: Back to the start
+      body:
+        one: The limit exists because each of these requests costs real work. Try
+          again in about a minute.
+        other: The limit exists because each of these requests costs real work. Try
+          again in about %{count} minutes.
+      title: That is more requests than we can serve one visitor

@@ -1,0 +1,29 @@
+# https://github.com/glebm/i18n-tasks
+base_locale: en
+locales: [en, de, pl]
+
+data:
+  read:
+    - config/locales/%{locale}.yml
+    - config/locales/**/*.%{locale}.yml
+  write:
+    - config/locales/%{locale}.yml
+
+search:
+  paths:
+    - app/
+    - lib/
+    # The throttled response is rendered by rack-attack middleware, below the
+    # layout and below Rails' locale handling, so its copy is referenced from
+    # an initializer rather than a view.
+    - config/initializers/
+
+ignore_unused:
+  - 'activerecord.*'
+  - 'time.formats.*'
+  - 'date.formats.*'
+  # Plan names and summaries are looked up by constructed key
+  # (`plans.#{key}.name`), which the static scanner cannot follow.
+  - 'plans.*'
+  - 'subscriptions.currency.*'
+  - 'subscriptions.ceilings.*'

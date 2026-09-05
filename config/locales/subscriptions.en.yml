@@ -1,0 +1,53 @@
+---
+en:
+  plans:
+    business:
+      name: Business
+      summary: A company with the whole team inside it and the API doing most of the
+        work.
+    free:
+      name: Free
+      summary: Enough to build something real on, and enough to find out whether this
+        is worth paying for.
+    starter:
+      name: Starter
+      summary: One person with several things in flight rather than one at a time.
+    team:
+      name: Team
+      summary: A team working on this every week, with room for everyone who touches
+        it.
+  subscriptions:
+    ceilings:
+      api_requests_per_hour: API requests an hour
+      projects: Projects
+      seats: Seats
+    confirmed: Your plan is live.
+    confirming: Stripe has your payment. The plan goes live as soon as Stripe confirms
+      it, usually within seconds.
+    currency:
+      eur: "€"
+      pln: zł
+      usd: "$"
+    errors:
+      no_customer: There is no billing account to open yet. It is created with the
+        first subscription.
+      unavailable: Stripe could not be reached. Nothing was charged.
+      unknown_plan: That is not a plan on offer.
+    show:
+      body: What an account may do, per tier. Every number here is the number the
+        product actually enforces — the pricing table and the refusal are read from
+        the same place.
+      choose: Choose %{plan}
+      current: Current plan
+      free_note: Where every account starts.
+      free_price: Free
+      heading: Plan
+      lapsed: The last payment did not go through, so this account is back on the
+        free ceilings until it does. Nothing has been deleted.
+      note: Prices are per month, excluding VAT where it applies.
+      on_this_plan: The plan this account is on.
+      per_month: "/ month"
+      portal: Billing and invoices
+      renews: Renews %{when}
+      title: Plan
+      unavailable: Not on sale here yet.

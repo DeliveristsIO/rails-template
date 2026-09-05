@@ -1,0 +1,36 @@
+---
+pl:
+  accounts:
+    email: Adres e-mail
+    password: Hasło
+    password_hint: Co najmniej %{count} znaków.
+  activerecord:
+    attributes:
+      user:
+        email_address: Adres e-mail
+        password: Hasło
+    errors:
+      models:
+        user:
+          attributes:
+            email_address:
+              taken: ma już konto — zaloguj się poniżej.
+  registrations:
+    new:
+      body: Jeden adres, jedno hasło. O nic więcej nie pytamy i nic więcej nie przechowujemy.
+      have_account: Masz już konto?
+      heading: Załóż konto
+      sign_in: Zaloguj się
+      submit: Załóż konto
+      title: Załóż konto
+  sessions:
+    create:
+      failed: Ten adres e-mail i hasło do siebie nie pasują.
+    new:
+      body: Witaj ponownie.
+      heading: Zaloguj się
+      no_account: Nie masz jeszcze konta?
+      sign_up: Załóż konto
+      submit: Zaloguj się
+      title: Zaloguj się
+    required: Zaloguj się, aby to zobaczyć.

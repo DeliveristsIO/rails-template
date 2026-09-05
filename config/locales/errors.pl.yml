@@ -1,0 +1,17 @@
+---
+pl:
+  errors:
+    challenge_failed: To nie wyglądało na przeglądarkę z człowiekiem po drugiej stronie.
+      Spróbuj ponownie.
+    throttled:
+      back: Wróć na początek
+      body:
+        few: Limit istnieje, bo każde z tych żądań kosztuje realną pracę. Spróbuj
+          ponownie za około %{count} minuty.
+        many: Limit istnieje, bo każde z tych żądań kosztuje realną pracę. Spróbuj
+          ponownie za około %{count} minut.
+        one: Limit istnieje, bo każde z tych żądań kosztuje realną pracę. Spróbuj
+          ponownie za około minutę.
+        other: Limit istnieje, bo każde z tych żądań kosztuje realną pracę. Spróbuj
+          ponownie za około %{count} minuty.
+      title: To więcej żądań, niż możemy obsłużyć dla jednego odwiedzającego

@@ -1,0 +1,9 @@
+# Two accounts, because most of what is worth testing here is one account not
+# being able to reach the other one's things.
+reader:
+  email_address: reader@example.com
+  password_digest: <%= BCrypt::Password.create("correct horse battery") %>
+
+other:
+  email_address: other@example.com
+  password_digest: <%= BCrypt::Password.create("correct horse battery") %>

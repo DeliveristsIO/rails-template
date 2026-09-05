@@ -1,0 +1,12 @@
+---
+en:
+  layout:
+    colophon: Built from the Deliverists Rails skeleton. Replace this line with whatever
+      the product is legally required to say, and with nothing it is not.
+    language: Language
+    mark: Skeleton
+    plan: Plan
+    sign_in: Sign in
+    sign_out: Sign out
+    sign_up: Create account
+    title: Skeleton

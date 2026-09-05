@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Generates a design asset with the Codex CLI and copies it into the repo.
+#
+#   bin/imagegen app/assets/images/hero.png "a textless engraved guilloche band…"
+#
+# Codex runs its sandbox read-only, so it cannot write into the working tree.
+# It saves to ~/.codex/generated_images/<session>/ instead; this picks up the
+# newest file from there and puts it where it was asked for.
+#
+# Two standing rules for every prompt passed here, because the alternative
+# breaks things no reviewer will catch later:
+#   - Textless. Baked-in words cannot be translated into DE or PL, and are
+#     invisible to bin/lint-legal — an image reading "is your name available?"
+#     would ship a forbidden claim past every gate this project has.
+#   - Monochrome or duotone in the ink palette. One accent per project.
+set -euo pipefail
+
+out="$1"; prompt="$2"
+store="$HOME/.codex/generated_images"
+before=$(find "$store" -name '*.png' 2>/dev/null | wc -l)
+
+codex exec --skip-git-repo-check -C "$(dirname "$out")" \
+  "Generate exactly one image. $prompt Absolutely no text, letters, numbers or logos anywhere in the image." \
+  2>&1 | tail -3
+
+newest=$(find "$store" -name '*.png' -newermt '-10 minutes' -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)
+[ -n "$newest" ] || { echo "no image produced (store had $before)"; exit 1; }
+
+mkdir -p "$(dirname "$out")"
+cp "$newest" "$out"
+echo "$out — $(identify -format '%wx%h' "$out" 2>/dev/null || echo "$(du -h "$out" | cut -f1)")"

@@ -1,0 +1,12 @@
+---
+de:
+  layout:
+    colophon: Gebaut auf dem Rails-Gerüst von Deliverists. Ersetzen Sie diese Zeile
+      durch das, was das Produkt rechtlich sagen muss — und durch nichts darüber hinaus.
+    language: Sprache
+    mark: Skeleton
+    plan: Tarif
+    sign_in: Anmelden
+    sign_out: Abmelden
+    sign_up: Konto anlegen
+    title: Skeleton

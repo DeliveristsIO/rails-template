@@ -1,0 +1,37 @@
+---
+en:
+  accounts:
+    email: Email address
+    password: Password
+    password_hint: At least %{count} characters.
+  activerecord:
+    attributes:
+      user:
+        email_address: Email address
+        password: Password
+    errors:
+      models:
+        user:
+          attributes:
+            email_address:
+              taken: already has an account — sign in below.
+  registrations:
+    new:
+      body: One address, one password. Nothing else is asked for and nothing else
+        is kept.
+      have_account: Already have an account?
+      heading: Create an account
+      sign_in: Sign in
+      submit: Create account
+      title: Create an account
+  sessions:
+    create:
+      failed: That email address and password do not match.
+    new:
+      body: Welcome back.
+      heading: Sign in
+      no_account: No account yet?
+      sign_up: Create one
+      submit: Sign in
+      title: Sign in
+    required: Sign in to see that.

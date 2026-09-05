@@ -1,0 +1,66 @@
+# Production deployment. Deploy with: bin/kamal deploy -d production
+#
+# TEMPLATE: replace HOST_IP and both proxy hostnames before the first deploy.
+
+servers:
+  web:
+    hosts:
+      - HOST_IP
+  jobs:
+    hosts:
+      - HOST_IP
+    cmd: bin/jobs
+    options:
+      cpus: "1"
+      memory: 1g
+
+proxy:
+  ssl: true
+  hosts:
+    - "example.com"
+    - "www.example.com"
+  response_timeout: 120
+  healthcheck:
+    path: /up
+    timeout: 60
+    interval: 1
+
+env:
+  clear:
+    RAILS_ENV: production
+    WEB_CONCURRENCY: "2"
+    RAILS_MAX_THREADS: "10"
+    SOLID_QUEUE_IN_PUMA: false
+    MALLOC_ARENA_MAX: "2"
+  secret:
+    - RAILS_MASTER_KEY
+    - DATABASE_URL
+    - SECRET_KEY_BASE
+    - SENTRY_DSN
+    - FLIPPER_USERNAME
+    - FLIPPER_PASSWORD
+    - STRIPE_SECRET_KEY
+    - STRIPE_WEBHOOK_SECRET
+    - SMTP_USERNAME
+    - SMTP_PASSWORD
+
+# ⚠️  `kamal accessory remove postgres -d production` DELETES ALL DATA.
+# Back up first:
+#   ssh ubuntu@HOST_IP "docker exec skeleton-postgres pg_dump -U skeleton skeleton_production | gzip > backup.sql.gz"
+accessories:
+  postgres:
+    image: postgres:16
+    host: HOST_IP
+    env:
+      clear:
+        POSTGRES_DB: skeleton_production
+        POSTGRES_USER: skeleton
+        POSTGRES_INITDB_ARGS: "-E UTF8"
+        PGDATA: /var/lib/postgresql/data/pgdata
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - postgres-data:/var/lib/postgresql/data
+    options:
+      cpus: "2"
+      memory: 2g

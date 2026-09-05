@@ -1,0 +1,3 @@
+# Advisories to ignore, with a justification and a review date for each.
+# https://github.com/rubysec/bundler-audit#configuration-file
+ignore: []

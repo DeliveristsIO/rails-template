@@ -1,0 +1,93 @@
+# Staging deployment. Deploy with: bin/kamal deploy -d staging
+#
+# TEMPLATE: replace HOST_IP and the proxy hostname. If the host is shared with
+# other Kamal apps, two things are worth knowing before touching it: never
+# accept a proxy reboot or upgrade prompt, because that interrupts routing for
+# every app on the box, and scope every command with `-d staging`.
+#
+# The postgres accessory publishes no ports on purpose, so it does not collide
+# with other postgres containers already on the host.
+
+servers:
+  web:
+    hosts:
+      - HOST_IP
+  jobs:
+    hosts:
+      - HOST_IP
+    cmd: bin/jobs
+    options:
+      cpus: "1"
+      memory: 768m
+
+proxy:
+  ssl: true
+  hosts:
+    - "staging.example.com"
+  response_timeout: 120
+  healthcheck:
+    path: /up
+    timeout: 60
+    interval: 1
+
+env:
+  clear:
+    RAILS_ENV: staging
+    WEB_CONCURRENCY: "2"
+    RAILS_MAX_THREADS: "10"
+    # Jobs run in their own container (see `jobs` above), so Puma must not also
+    # supervise them — two supervisors on one queue is two workers claiming the
+    # same job.
+    SOLID_QUEUE_IN_PUMA: false
+    # glibc's per-thread malloc arenas otherwise let a multi-threaded Ruby
+    # process's RSS climb well past its live heap size in a container.
+    MALLOC_ARENA_MAX: "2"
+    # Cloudflare Turnstile. The site key is public and belongs in the clear;
+    # its secret is in .kamal/secrets.staging. Turnstile needs the pair, so
+    # until both are present the challenge renders nothing and admits
+    # everybody — which is a supported state, not a broken one.
+    #
+    # Uncomment both this and TURNSTILE_SECRET_KEY below together.
+    # TURNSTILE_SITE_KEY: 0x4AAAAAAA_replace_me
+  secret:
+    - RAILS_MASTER_KEY
+    - DATABASE_URL
+    - SECRET_KEY_BASE
+    - SENTRY_DSN
+    - FLIPPER_USERNAME
+    - FLIPPER_PASSWORD
+    # Stripe. A staging box wants a test key: a key beginning sk_live_ takes
+    # real money from whoever presses the button.
+    - STRIPE_SECRET_KEY
+    - STRIPE_WEBHOOK_SECRET
+    # Outbound mail. Both are read by config/environments/staging.rb; without
+    # them here the container gets nil credentials and every send fails SMTP
+    # auth, which looks like a mail-provider problem and is not one.
+    - SMTP_USERNAME
+    - SMTP_PASSWORD
+    # Paired with TURNSTILE_SITE_KEY above. Put the value in
+    # .kamal/secrets.staging *before* uncommenting these, or the deploy stops
+    # on a secret it cannot resolve.
+    # - TURNSTILE_SITE_KEY
+    # - TURNSTILE_SECRET_KEY
+
+# ⚠️  `kamal accessory remove postgres -d staging` DELETES ALL DATA.
+# Back up first:
+#   ssh ubuntu@HOST_IP "docker exec skeleton-postgres pg_dump -U skeleton skeleton_staging | gzip > backup.sql.gz"
+accessories:
+  postgres:
+    image: postgres:16
+    host: HOST_IP
+    env:
+      clear:
+        POSTGRES_DB: skeleton_staging
+        POSTGRES_USER: skeleton
+        POSTGRES_INITDB_ARGS: "-E UTF8"
+        PGDATA: /var/lib/postgresql/data/pgdata
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - postgres-data:/var/lib/postgresql/data
+    options:
+      cpus: "2"
+      memory: 2g

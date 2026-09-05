@@ -1,0 +1,37 @@
+---
+de:
+  accounts:
+    email: E-Mail-Adresse
+    password: Passwort
+    password_hint: Mindestens %{count} Zeichen.
+  activerecord:
+    attributes:
+      user:
+        email_address: E-Mail-Adresse
+        password: Passwort
+    errors:
+      models:
+        user:
+          attributes:
+            email_address:
+              taken: hat bereits ein Konto — melden Sie sich unten an.
+  registrations:
+    new:
+      body: Eine Adresse, ein Passwort. Mehr wird nicht abgefragt und mehr wird nicht
+        gespeichert.
+      have_account: Sie haben bereits ein Konto?
+      heading: Konto anlegen
+      sign_in: Anmelden
+      submit: Konto anlegen
+      title: Konto anlegen
+  sessions:
+    create:
+      failed: Diese E-Mail-Adresse und dieses Passwort passen nicht zusammen.
+    new:
+      body: Willkommen zurück.
+      heading: Anmelden
+      no_account: Noch kein Konto?
+      sign_up: Jetzt anlegen
+      submit: Anmelden
+      title: Anmelden
+    required: Melden Sie sich an, um das zu sehen.

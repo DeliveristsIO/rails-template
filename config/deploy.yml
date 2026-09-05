@@ -1,0 +1,44 @@
+# Base Kamal configuration, shared across destinations.
+# Destination-specific: config/deploy.staging.yml, config/deploy.production.yml
+# Deploy with: bin/kamal deploy -d staging
+#
+# TEMPLATE: `service`, `image` and the storage volume are renamed by
+# bin/new-app. The registry and the builder are not — set them once for the
+# organisation and they are right for every app after this one.
+
+service: skeleton
+
+image: ORG/skeleton
+
+registry:
+  server: ghcr.io
+  username: ORG
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+ssh:
+  user: ubuntu
+
+builder:
+  arch:
+    - amd64
+  args:
+    GIT_SHA: <%= `git rev-parse HEAD`.strip %>
+
+deploy_timeout: 120
+drain_timeout: 30
+
+volumes:
+  - "skeleton_storage:/rails/storage"
+
+asset_path: /rails/public/assets
+
+boot:
+  limit: 10
+  wait: 20
+
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole --include-password"

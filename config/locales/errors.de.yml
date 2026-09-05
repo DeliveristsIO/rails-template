@@ -1,0 +1,13 @@
+---
+de:
+  errors:
+    challenge_failed: Das sah nicht nach einem Browser mit einem Menschen davor aus.
+      Bitte versuchen Sie es erneut.
+    throttled:
+      back: Zurück zum Anfang
+      body:
+        one: Das Limit gibt es, weil jede dieser Anfragen echte Arbeit kostet. Versuchen
+          Sie es in etwa einer Minute erneut.
+        other: Das Limit gibt es, weil jede dieser Anfragen echte Arbeit kostet. Versuchen
+          Sie es in etwa %{count} Minuten erneut.
+      title: Das sind mehr Anfragen, als wir für einen Besucher bedienen können

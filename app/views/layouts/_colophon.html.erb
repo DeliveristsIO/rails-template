@@ -1,0 +1,15 @@
+<footer class="mt-24 border-t border-ink-100">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-start sm:justify-between">
+    <p class="max-w-2xl text-sm leading-relaxed text-ink-400"><%= t("layout.colophon") %></p>
+
+    <%# The locale switch is a link per language rather than a select, because
+        it has to work before any JavaScript has loaded and has to be a real
+        URL a visitor can bookmark. %>
+    <nav class="flex gap-4 text-sm" aria-label="<%= t("layout.language") %>">
+      <% I18n.available_locales.each do |locale| %>
+        <%= link_to locale.to_s.upcase, url_for(locale: locale),
+              class: class_names("font-mono tracking-wide", I18n.locale == locale ? "text-ink-900" : "text-ink-400 hover:text-ink-600") %>
+      <% end %>
+    </nav>
+  </div>
+</footer>

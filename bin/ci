@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require_relative "../config/boot"
+require "active_support/continuous_integration"
+
+if ENV["CI"].to_s.empty? && ENV.fetch("RAILS_ENV", "development") != "development"
+  abort "Refusing to run bin/ci outside development or CI."
+end
+
+CI = ActiveSupport::ContinuousIntegration
+require_relative "../config/ci.rb"

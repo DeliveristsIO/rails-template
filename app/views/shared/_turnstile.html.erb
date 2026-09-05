@@ -1,0 +1,22 @@
+<%# Renders nothing at all until the keys are set, so an unconfigured install
+    submits exactly as it would without a challenge. Render it inside the form
+    it guards — the refusal message belongs next to the thing it is about, and
+    this layout deliberately renders no flash globally. %>
+<% if Turnstile.configured? %>
+  <div class="mt-8">
+    <% if flash.now[:alert].present? %>
+      <p class="mb-4 rounded-lg bg-state-bad/10 px-4 py-3 text-sm text-state-bad"><%= flash.now[:alert] %></p>
+    <% end %>
+
+    <%# Loaded per form rather than in the layout: these are the only pages that
+        ask the question, and no other page should be talking to Cloudflare. %>
+    <script src="<%= Turnstile::WIDGET_JS %>" async defer></script>
+    <%# refresh-expired is auto by default; set here because it is the whole
+        reason this works. A token dies after 300 seconds and validates once,
+        so on any form somebody reads properly before submitting, the
+        thoughtful visitor is the one who gets called a robot without it. %>
+    <div class="cf-turnstile" data-sitekey="<%= Turnstile.site_key %>"
+         data-refresh-expired="auto" data-theme="light"
+         data-language="<%= I18n.locale %>"></div>
+  </div>
+<% end %>
