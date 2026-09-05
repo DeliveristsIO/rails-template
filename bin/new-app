@@ -68,5 +68,6 @@ cat <<MSG
     app/models/plan.rb            the ceilings this product actually meters
     app/assets/tailwind/…css      the design tokens
     app/views/home/show.html.erb  delete it
+    README.md, CLAUDE.md          rewrite the top of each for this product
 
 MSG

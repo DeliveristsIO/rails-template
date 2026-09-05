@@ -1,4 +1,4 @@
-# Rails skeleton
+# Skeleton
 
 The application that is left when you take the product out.
 
@@ -40,7 +40,7 @@ cannot survive its own success.
 No admin, no background-job dashboard, no CSS framework beyond Tailwind, no
 API layer, no OAuth provider, no soft deletes, no `ApplicationService` base
 class, no `app/queries`. Each of those is a decision the product gets to make
-once it knows what it is. The skeleton's job is to have already made the ones
+once it knows what it is. The template's job is to have already made the ones
 that are the same every time.
 
 ## The rules that are worth keeping

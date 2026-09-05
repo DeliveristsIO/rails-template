@@ -1,7 +1,7 @@
 require "test_helper"
 
 # Where the challenge sits: in front of the verbs a rotating address makes
-# free. Signing up is the one this skeleton ships with — add the product's own
+# free. Signing up is the one this template ships with — add the product's own
 # expensive verb to the same list rather than inventing a second mechanism.
 class ChallengeTest < ActionDispatch::IntegrationTest
   ACCOUNT = { email_address: "person@example.com", password: "correct horse battery" }.freeze

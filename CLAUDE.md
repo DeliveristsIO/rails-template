@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Rails application skeleton, cloned to start a product rather than run as one.
+A Rails application template, cloned to start a product rather than run as one.
 Read [README.md](README.md) first, then [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 If this repository is still called `rails-template` and `bin/new-app` still
