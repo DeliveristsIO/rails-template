@@ -25,9 +25,13 @@ before `run_bundle` and before the javascript, hotwire, css, kamal and solid
 installers, and each of those would reinstall something already here;
 `run_after_bundle_callbacks` is the last task the generator runs.
 
-Both scripts delete themselves. A second run would rename an application that
-no longer carries the placeholder, and an app that still shipped `template.rb`
-would be handing out copies of a starting point it has already left.
+Both scripts delete themselves, and `bin/new-app` takes `LICENSE` with them. A
+second run would rename an application that no longer carries the placeholder;
+an app that still shipped `template.rb` would be handing out copies of a
+starting point it has already left; and an app that kept the MIT notice would
+be publishing a licence, and a copyright holder, its author never chose. The
+notice covers the template. What is built from it belongs to whoever built
+it.
 
 ## Stack
 

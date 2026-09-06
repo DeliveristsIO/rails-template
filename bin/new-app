@@ -13,7 +13,7 @@ cd "$(dirname "$0")/.."
 
 if [ $# -lt 1 ]; then
   echo "usage: bin/new-app <name> [org]" >&2
-  echo "  e.g. bin/new-app invoicer deliverists-io" >&2
+  echo "  e.g. bin/new-app invoicer acme" >&2
   exit 1
 fi
 
@@ -48,6 +48,12 @@ fi
 for file in "${files[@]}"; do
   sed -i "s/Skeleton/${camel}/g; s/skeleton/${snake}/g; s|\bORG\b|${org}|g" "$file"
 done
+
+# The template's own MIT notice covers the template, not what is built from
+# it, and a copyright line nobody wrote is worse than none: an app that
+# shipped this file would be publishing a licence its author never chose.
+git rm -q -f --cached LICENSE >/dev/null 2>&1 || true
+rm -f LICENSE
 
 # This script is the one thing that cannot survive its own success: a second
 # run would rename an app that no longer carries the placeholder. --force

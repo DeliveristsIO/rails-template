@@ -8,20 +8,23 @@ of them needed and neither of them wanted to write twice belongs here. Take a
 copy, name it, and start on the part that is actually the product.
 
 ```bash
-rails new my-app --skip-bundle -m https://raw.githubusercontent.com/DeliveristsIO/rails-template/main/template.rb
+rails new my-app -m https://raw.githubusercontent.com/DeliveristsIO/rails-template/main/template.rb
 ```
 
 `template.rb` is a Rails application template: `rails new` generates a stock
 app, and the template replaces it with this one's tracked files and renames
-the placeholder. Put that `-m` line in `~/.railsrc` and plain `rails new
-my-app` does it. `APP_ORG=DeliveristsIO` sets the Docker organisation.
+the placeholder to yours. Nothing to install and nothing to configure — it
+runs from the URL. Add `--skip-bundle` to skip the stock bundle it is about to
+throw away, and `APP_ORG=your-org` to set the Docker organisation
+`config/deploy.yml` pushes to. Put the `-m` line in `~/.railsrc` and plain
+`rails new my-app` does it.
 
 The same thing by hand, which is what the template runs:
 
 ```bash
-git clone git@github.com:DeliveristsIO/rails-template.git my-app
+git clone https://github.com/DeliveristsIO/rails-template.git my-app
 cd my-app
-bin/new-app my-app deliverists-io   # module, database, Kamal service, mail sender
+bin/new-app my-app your-org   # module, database, Kamal service, mail sender
 ```
 
 Either way, from there:
@@ -35,6 +38,9 @@ bin/dev                     # web + css + jobs
 
 `bin/new-app` and `template.rb` both delete themselves when they are done.
 They are the only things here that cannot survive their own success.
+
+You need Ruby (`.ruby-version`, and `bin/setup` expects [mise](https://mise.jdx.dev))
+and a PostgreSQL you can reach. `bin/setup` handles the rest.
 
 ## What is in it
 
@@ -81,3 +87,11 @@ Every one of these is here because breaking it cost somebody a day.
 6. **`bin/ci` is the definition of green.** CI runs that one command rather
    than re-listing its steps, so the thing that passes locally is the thing
    that passes on the branch.
+
+## Licence
+
+MIT — see [LICENSE](LICENSE). It covers this template.
+
+Applications generated from it are yours: `bin/new-app` deletes the LICENSE
+file along with itself, and you licence what you build however you like. No
+attribution, no notice to carry, no obligation either way.

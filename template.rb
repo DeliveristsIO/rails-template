@@ -1,9 +1,12 @@
 # Rails application template — the other way in.
 #
-#   rails new my-app --skip-bundle -m template.rb
-#   rails new my-app --skip-bundle -m https://raw.githubusercontent.com/DeliveristsIO/rails-template/main/template.rb
+#   rails new my-app -m template.rb
+#   rails new my-app -m https://raw.githubusercontent.com/DeliveristsIO/rails-template/main/template.rb
 #
 # Put the -m line in ~/.railsrc and plain `rails new my-app` applies it.
+# --skip-bundle is worth adding and is not required: without it `rails new`
+# bundles a Gemfile this is about to replace, and runs installers whose output
+# this is about to delete. The result is the same either way.
 #
 # `rails new` generates a stock application; this replaces it with the
 # skeleton's tracked files and renames the placeholder, so the result is the
@@ -13,7 +16,7 @@
 # hotwire, css, kamal and solid installers, every one of which would reinstall
 # something the skeleton already ships.
 #
-#   APP_ORG=DeliveristsIO   the Docker organisation config/deploy.yml pushes to
+#   APP_ORG=your-org        the Docker organisation config/deploy.yml pushes to
 #   SKELETON_REPO=…         a clone source other than this file's own repository
 #   SKELETON_BRANCH=…       a branch other than the source's default
 
