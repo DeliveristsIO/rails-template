@@ -72,7 +72,7 @@ cat <<MSG
     bin/ci                        everything green before the first commit
 
   Then, before the second screen:
-    config/deploy*.yml            HOST_IP and the hostnames
+    config/deploy*.yml            HOST_IP, the hostnames, the image org
     app/models/plan.rb            the ceilings this product actually meters
     app/assets/tailwind/…css      the design tokens
     app/views/home/show.html.erb  delete it
