@@ -2,11 +2,9 @@
 
 [tools]
 ruby = "4"
-node = "22.22.2"
 
 [env]
 RAILS_ENV = "development"
-NODE_ENV = "development"
 
 # TEMPLATE: give each app its own port. A development box that runs two of
 # these at once otherwise has the second one fail to bind, and mailer links
